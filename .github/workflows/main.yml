@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  phpstan:
+    runs-on: ${{ matrix.image }}
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [ubuntu-20.04]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Composer
+        run: curl -sS https://getcomposer.org/installer | php
+      - name: Install Composer dependencies
+        run: php composer.phar install
+      - name: PHPstan analyse
+        uses: OskarStark/phpstan-ga@1.0.1
+  codestyle:
+    runs-on: ${{ matrix.image }}
+    name: Code Style checks
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [ubuntu-20.04]
+    steps:      
+      - uses: actions/checkout@v2
+      - name: Setup PHP and tools
+        uses: shivammathur/setup-php@2.15.0
+        with:
+          php-version: 8.0
+          tools: php-cs-fixer:3.2
+      - name: Run PHP-CS-Fixer
+        run: php-cs-fixer fix --dry-run --diff --ansi
