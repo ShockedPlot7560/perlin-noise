@@ -6,6 +6,7 @@ namespace ShockedPlot7560\PerlinNoise;
 
 use ShockedPlot7560\PerlinNoise\utils\Pair;
 use ShockedPlot7560\PerlinNoise\utils\Random;
+use function array_key_last;
 use function count;
 use function floor;
 use function pow;
@@ -97,7 +98,7 @@ class OctavePerlinNoiseSampler {
 			throw new \InvalidArgumentException("Need more than 0 octaves");
 		} else {
 			$startOctave = -$octaves[0];
-			$endOctave = $octaves[-1];
+			$endOctave = $octaves[array_key_last($octaves)];
 			$totalOctaves = $startOctave + $endOctave + 1;
 			if ($totalOctaves < 1) {
 				throw new \InvalidArgumentException("Number of octaves needs to be >= 1 in total");

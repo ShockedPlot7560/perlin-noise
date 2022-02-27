@@ -11,7 +11,7 @@ use function min;
 
 class PerlinNoiseSampler {
 	/** @var int[] */
-	private array $permutations;
+	private array $permutations = [];
 	public float $xOffset;
 	public float $yOffset;
 	public float $zOffset;
@@ -21,10 +21,10 @@ class PerlinNoiseSampler {
 		$this->yOffset = $random->nextFloat() * 256.0;
 		$this->zOffset = $random->nextFloat() * 256.0;
 
-		for ($i = 0; $i < 256; $i++) {
+		for ($i = 0; $i < 256; ++$i) {
 			$this->permutations[$i] = $i;
 		}
-		for ($j = 0; $j < 256; $j++) {
+		for ($j = 0; $j < 256; ++$j) {
 			$k = $random->nextBoundedInt(256 - $j);
 			$byte0 = $this->permutations[$j];
 			$this->permutations[$j] = $this->permutations[$j + $k];

@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace ShockedPlot7560\PerlinNoise;
 
 use ShockedPlot7560\PerlinNoise\utils\Random;
+use function array_key_last;
+use function array_map;
 use function array_search;
 use function count;
+use function is_int;
 use function pow;
 use function sort;
 
 class OctaveSimplexNoiseSampler {
 	/** @var SimplexNoiseSampler[] */
-	private array $octaves;
+	private array $octaves = [];
 	private float $persistence;
 	private float $lacunarity;
 
@@ -20,6 +23,11 @@ class OctaveSimplexNoiseSampler {
 	 * @param int[] $octaves
 	 */
 	public function __construct(Random $random, array $octaves) {
+		array_map(function($element) {
+			if (!is_int($element)) {
+				throw new \InvalidArgumentException("Octaves list must contain only integer element");
+			}
+		}, $octaves);
 		if (!sort($octaves)) { //get a int sort array
 			throw new \RuntimeException("The sorting array has failed");
 		}
@@ -27,7 +35,7 @@ class OctaveSimplexNoiseSampler {
 			throw new \InvalidArgumentException("Need more than 0 octaves");
 		} else {
 			$startOctave = -$octaves[0];
-			$endOctave = $octaves[-1];
+			$endOctave = $octaves[array_key_last($octaves)];
 			$totalOctaves = $startOctave + $endOctave + 1;
 			if ($totalOctaves < 1) {
 				throw new \InvalidArgumentException("Number of octaves needs to be >= 1 in total");

@@ -16,18 +16,28 @@ class SimplexNoiseSampler {
 	public float $yOffset;
 	public float $zOffset;
 
-	private const SQRT_3 = sqrt(3.0);
-	private const F2 = 0.5 * (self::SQRT_3 - 1.0);
-	private const G2 = (3.0 - self::SQRT_3) / 6.0;
+	/** @var float */
+	private static $SQRT_3;
+	/** @var float */
+	private static $F2;
+	/** @var float */
+	private static $G2;
 	/** @var int[] */
-	private array $permutations;
+	private array $permutations = [];
 
 	public function __construct(Random $random) {
+		self::$SQRT_3 = sqrt(3.0);
+		self::$F2 = 0.5 * (self::$SQRT_3 - 1.0);
+		self::$G2 = (3.0 - self::$SQRT_3) / 6.0;
 		$this->xOffset = $random->nextFloat() * 256.0;
 		$this->yOffset = $random->nextFloat() * 256.0;
 		$this->zOffset = $random->nextFloat() * 256.0;
 
-		for ($j = 0; $j < 256; $j++) {
+		for ($i = 0; $i < 256; ++$i) {
+			$this->permutations[$i] = $i;
+		}
+
+		for ($j = 0; $j < 256; ++$j) {
 			$k = $random->nextBoundedInt(256 - $j);
 			$l = $this->permutations[$j];
 			$this->permutations[$j] = $this->permutations[$j + $k];
@@ -58,10 +68,10 @@ class SimplexNoiseSampler {
 	}
 
 	public function sample2D(float $x, float $y) : float {
-		$d0 = ($x + $y) * self::F2;
+		$d0 = ($x + $y) * self::$F2;
 		$i = floor($x + $d0);
 		$j = floor($y + $d0);
-		$d1 = ($i + $j) * self::G2;
+		$d1 = ($i + $j) * self::$G2;
 		$d2 = $i - $d1;
 		$d3 = $j - $d1;
 		$d4 = $x - $d2;
@@ -74,10 +84,10 @@ class SimplexNoiseSampler {
 			$l = 1;
 		}
 
-		$d6 = $d4 - $k + self::G2;
-		$d7 = $d5 - $l + self::G2;
-		$d8 = $d4 - 1.0 + 2.0 * self::G2;
-		$d9 = $d5 - 1.0 + 2.0 * self::G2;
+		$d6 = $d4 - $k + self::$G2;
+		$d7 = $d5 - $l + self::$G2;
+		$d8 = $d4 - 1.0 + 2.0 * self::$G2;
+		$d9 = $d5 - 1.0 + 2.0 * self::$G2;
 		$i1 = $i & 255;
 		$j1 = $j & 255;
 		$k1 = $this->getPermutValue($i1 + $this->getPermutValue($j1)) % 12;

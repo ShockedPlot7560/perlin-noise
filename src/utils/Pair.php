@@ -12,6 +12,9 @@ final class Pair {
 	/** @var float[] */
 	private array $doubleList;
 
+	/**
+	 * @param float[] $doubleList
+	 */
 	public function __construct(int $integer, array $doubleList) {
 		$this->integer = $integer;
 		array_map(function($element) {
@@ -26,6 +29,7 @@ final class Pair {
 		return $this->integer;
 	}
 
+	/** @return float[] */
 	public function getDoubleList() : array {
 		return $this->doubleList;
 	}
