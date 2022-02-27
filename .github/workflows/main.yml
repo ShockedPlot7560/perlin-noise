@@ -40,7 +40,6 @@ jobs:
         run: php-cs-fixer fix --dry-run --diff --ansi
   phpunit:
     name: PHPUnit tests
-    needs: build-php
     runs-on: ${{ matrix.image }}
     strategy:
       fail-fast: false
