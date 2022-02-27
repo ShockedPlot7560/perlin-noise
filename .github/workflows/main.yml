@@ -38,3 +38,19 @@ jobs:
           tools: php-cs-fixer:3.2
       - name: Run PHP-CS-Fixer
         run: php-cs-fixer fix --dry-run --diff --ansi
+  phpunit:
+    name: PHPUnit tests
+    needs: build-php
+    runs-on: ${{ matrix.image }}
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [ubuntu-20.04]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Composer
+        run: curl -sS https://getcomposer.org/installer | php
+      - name: Install Composer dependencies
+        run: php composer.phar install --prefer-dist --no-interaction
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpunit --bootstrap vendor/autoload.php --fail-on-warning tests/
