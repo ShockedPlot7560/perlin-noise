@@ -9,6 +9,7 @@ on:
 jobs:
   phpstan:
     runs-on: ${{ matrix.image }}
+    name: PHPStan analysis
     strategy:
       fail-fast: false
       matrix:
@@ -19,7 +20,7 @@ jobs:
         run: curl -sS https://getcomposer.org/installer | php
       - name: Install Composer dependencies
         run: php composer.phar install
-      - name: PHPstan analyse
+      - name: PHPStan analysis
         uses: OskarStark/phpstan-ga@1.0.1
   codestyle:
     runs-on: ${{ matrix.image }}
