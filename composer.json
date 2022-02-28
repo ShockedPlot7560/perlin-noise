@@ -4,7 +4,7 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "ShockedPlot7560\\PerlinNoise\\": "src/"
+            "ShockedPlot7560\\PerlinNoise\\": "src/ShockedPlot7560/PerlinNoise"
         }
     },
     "license": "GPL-3.0",
