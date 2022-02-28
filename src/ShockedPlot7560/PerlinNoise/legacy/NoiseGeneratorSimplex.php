@@ -25,7 +25,10 @@ class NoiseGeneratorSimplex {
 	/** @var int[] */
 	private array $permutations = [];
 
-	public function __construct(Random $random = new Random()) {
+	public function __construct(Random $random = null) {
+		if($random === null){
+			$random = new Random();
+		}
 		self::$SQRT_3 = sqrt(3.0);
 		self::$F2 = 0.5 * (self::$SQRT_3 - 1.0);
 		self::$G2 = (3.0 - self::$SQRT_3) / 6.0;
