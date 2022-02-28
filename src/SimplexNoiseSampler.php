@@ -104,7 +104,7 @@ class SimplexNoiseSampler {
 		$i = floor($x + $d1);
 		$j = floor($y + $d1);
 		$k = floor($z + $d1);
-		$d3 = (float) ($i + $j + $k) * 0.16666666666666666;
+		$d3 = (float) ($i + $j + $k) * 1 / 6;
 		$d4 = $i - $d3;
 		$d5 = $j - $d3;
 		$d6 = $k - $d3;
@@ -157,9 +157,9 @@ class SimplexNoiseSampler {
 			$i2 = 0;
 		}
 
-		$d10 = $d7 - (float) $l + 0.16666666666666666;
-		$d11 = $d8 - (float) $i1 + 0.16666666666666666;
-		$d12 = $d9 - (float) $j1 + 0.16666666666666666;
+		$d10 = $d7 - (float) $l + 1 / 6;
+		$d11 = $d8 - (float) $i1 + 1 / 6;
+		$d12 = $d9 - (float) $j1 + 1 / 6;
 		$d13 = $d7 - (float) $k1 + 1 / 3;
 		$d14 = $d8 - (float) $l1 + 1 / 3;
 		$d15 = $d9 - (float) $i2 + 1 / 3;
