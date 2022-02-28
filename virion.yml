@@ -1,0 +1,6 @@
+name: PerlinNoise
+version: 1.0.0
+api: 4.0.0
+antigen: ShockedPlot7560\PerlinNoise
+author: ShockedPlot7560
+php: 8.0
